@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Página de Inicio</title>
+    <!-- Aquí puedes agregar tus archivos CSS -->
+</head>
+<body>
+    <header>
+        <h1>Bienvenidos a mi Blog</h1>
+        <nav>
+            <p>
+                Hola Mundo!
+            </p>
+        </nav>
+        {% if user.is_authenticated %}
+        <p>¡Bienvenido, {{ user.username }}!</p>
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Cerrar sesión</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Iniciar sesión</a></p>
+        <p><a href="{% url 'register' %}">Registrarse</a></p>
+    {% endif %}
+    
+    </header>
+
+    <main>
+        <section>
+            <h2>Últimos Posts</h2>
+            <ul>
+                {% for post in posts %}
+                    <li>
+                        <h3>{{ post.titulo }}</h3>
+                        <p>{{ post.contenido }}</p>
+                        <p><em>Fecha de creación: {{ post.fecha_creacion }}</em></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mi Blog</p>
+    </footer>
+</body>
+</html>
